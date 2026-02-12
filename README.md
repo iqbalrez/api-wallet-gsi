@@ -13,7 +13,7 @@ Dokumentasi untuk backend API Wallet Application. API ini menangani otentikasi u
 1. **Clone repository**
 
     ```bash
-    git clone [https://github.com/iqbalrez/api-wallet-gsi.git](https://github.com/iqbalrez/api-wallet-gsi.git)
+    git clone https://github.com/iqbalrez/api-wallet-gsi.git
     cd api-wallet-gsi
     ```
 
@@ -28,6 +28,7 @@ Dokumentasi untuk backend API Wallet Application. API ini menangani otentikasi u
     ```bash
     cp .env.example .env
     php artisan key:generate
+    php artisan jwt:secret
     ```
 
 4. **Migrasi & Seeding Database**
