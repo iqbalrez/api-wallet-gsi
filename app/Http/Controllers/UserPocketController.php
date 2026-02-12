@@ -91,7 +91,7 @@ class UserPocketController extends Controller
             'error'   => false,
             'message' => 'Report sedang dibuat. Silahkan check berkala pada link berikut.',
             'data'    => [
-                'link' => url("/storage/reports/{$fileName}.xlsx")
+                'link' => url("/reports/{$fileName}")
             ]
         ]);
     }
