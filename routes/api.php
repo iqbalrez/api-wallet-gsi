@@ -15,6 +15,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/pockets', [UserPocketController::class, 'create'])->name('pockets.create');
     Route::get('/pockets', [UserPocketController::class, 'list'])->name('pockets.list');
     Route::get('/pockets/total-balance', [UserPocketController::class, 'totalBalances'])->name('pockets.total');
+    Route::post('/pockets/{id}/create-report', [UserPocketController::class, 'createReport']);
 
     Route::post('/incomes', [IncomeController::class, 'create'])->name('incomes.create');
     Route::post('/expenses', [ExpenseController::class, 'create'])->name('expenses.create');

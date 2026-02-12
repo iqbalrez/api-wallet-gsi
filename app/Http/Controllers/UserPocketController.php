@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GeneratePocketReport;
 use App\Models\UserPocket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserPocketController extends Controller
 {
@@ -61,5 +63,36 @@ class UserPocketController extends Controller
             'message' => 'Berhasil mendapatkan total balance.',
             'data'    => ['total' => $totalBalance]
         ], 200);
+    }
+
+    public function createReport(Request $request, $id)
+    {   
+        $user = auth()->user();
+
+        $request->validate([
+            'type' => 'required|in:INCOME,EXPENSE',
+            'date' => 'required|date_format:Y-m-d',
+        ]); 
+
+        $pocket = $user->pockets()->findOrFail($id);
+
+        $timestamp = now()->timestamp;
+        $uuid = Str::uuid();
+        $fileName  = "{$uuid}-{$timestamp}";
+
+        GeneratePocketReport::dispatch(
+            $pocket,
+            $request->type,
+            $request->date,
+            $fileName);
+
+        return response()->json([
+            'status'  => 200,
+            'error'   => false,
+            'message' => 'Report sedang dibuat. Silahkan check berkala pada link berikut.',
+            'data'    => [
+                'link' => url("/storage/reports/{$fileName}.xlsx")
+            ]
+        ]);
     }
 }
