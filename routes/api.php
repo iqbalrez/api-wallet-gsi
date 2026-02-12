@@ -11,4 +11,5 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/pockets', [UserPocketController::class, 'create'])->name('pockets.create');
+    Route::get('/pockets', [UserPocketController::class, 'list'])->name('pockets.list');
 });
