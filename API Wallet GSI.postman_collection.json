@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "dd7355a2-08a2-4a17-a081-a8d1d505f6c4",
+		"name": "API Wallet GSI",
+		"description": "API collection for testing wallet endpoints including login, pocket management, and transaction creation.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"example1@mail.net\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <jwt_token>",
+						"description": "Replace <jwt_token> with a valid JWT token."
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/auth/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pockets",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <jwt_token>",
+						"description": "Replace <jwt_token> with a valid JWT token."
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/pockets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pockets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Pocket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Pocket 1\",\r\n    \"initial_balance\": 2000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pockets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pockets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Income",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pocket_id\": \"uuid\",\r\n    \"amount\": 300000,\r\n    \"notes\": \"Menemukan uang di jalan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/incomes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"incomes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Expense",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pocket_id\": \"uuid\",\r\n    \"amount\": 2000000,\r\n    \"notes\": \"Ganti lecet mobil orang\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/expenses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"expenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Report by Pocket ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"INCOME\",\r\n    \"date\": \"2026-02-12\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost.:8000/api/pockets/:id/create-report",
+					"protocol": "http",
+					"host": [
+						"localhost",
+						""
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pockets",
+						":id",
+						"create-report"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Total Balances",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <jwt_token>",
+						"description": "Replace <jwt_token> with a valid JWT token."
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"description": "Authorization Bearer token"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/pockets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pockets"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3NzA4OTU4NDQsImV4cCI6MTc3MDg5OTQ0NCwibmJmIjoxNzcwODk1ODQ0LCJqdGkiOiJrbTZJNTlSNjNLbjhleXJFIiwic3ViIjoiMDE5YzUwZGYtMzEwMy03MmM3LTlkNWMtNTdjZjEwZjZlYjU5IiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.ouGykjTZRr8L6z8KaTsgTzw4zUVfqxCmK7w9UbZN4oI"
+		}
+	]
+}
