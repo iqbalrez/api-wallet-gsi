@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\UserPocketController;
 
 Route::prefix('auth')->group(function () {
@@ -12,4 +13,6 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::post('/pockets', [UserPocketController::class, 'create'])->name('pockets.create');
     Route::get('/pockets', [UserPocketController::class, 'list'])->name('pockets.list');
+
+    Route::post('/incomes', [IncomeController::class, 'create'])->name('incomes.create');
 });
