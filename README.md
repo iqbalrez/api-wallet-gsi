@@ -1,3 +1,149 @@
+# Wallet API Documentation
+
+Dokumentasi untuk backend API Wallet Application. API ini menangani otentikasi user, manajemen dompet (pockets), pencatatan pemasukan/pengeluaran, dan pelaporan.
+
+## Persyaratan Sistem
+
+- PHP 8.3+
+- Composer
+- Database (pgSQL)
+
+## Instalasi
+
+1. **Clone repository**
+
+    ```bash
+    git clone [https://github.com/iqbalrez/api-wallet-gsi.git](https://github.com/iqbalrez/api-wallet-gsi.git)
+    cd api-wallet-gsi
+    ```
+
+2. **Install dependensi**
+
+    ```bash
+    composer install
+    ```
+
+3. **Setup environment**
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+
+4. **Migrasi & Seeding Database**
+   Jalankan perintah ini untuk membuat tabel dan data dummy (2 user test).
+
+    ```bash
+    php artisan migrate
+    php artisan db:seed
+    ```
+
+5. **Jalankan server**
+    ```bash
+    php artisan serve
+    ```
+
+## Otentikasi
+
+API ini menggunakan JWT. Sertakan token pada header untuk endpoint yang diproteksi.
+
+`Header: Authorization: Bearer <your-token> Accept: application/json`
+
+## Endpoints
+
+1. **Endpoint untuk User Login**
+
+    Method: `POST` - api/auth/login
+
+    Request:
+
+    ```
+    {
+        "email": "example@mail.net",
+        "password": "password"
+    }
+    ```
+
+2. **Endpoint untuk Get User Profile**
+
+    Method: `GET` - api/auth/profile
+
+3. **Endpoint untuk Get Pockets**
+
+    Method: `GET` - api/pockets
+
+4. **Endpoint untuk Add New Pocket**
+
+    Method: `POST` - api/pockets
+
+    Request:
+
+    ```
+    {
+        "name": "Pocket 1",
+        "initial_balance": 2000000
+    }
+    ```
+
+5. **Endpoint untuk Create Income**
+
+    Method: `POST` - api/incomes
+
+    Request:
+
+    ```
+    {
+        "pocket_id": "uuid",
+        "amount": 300000,
+        "notes": "Menemukan uang di jalan"
+    }
+
+    ```
+
+6. **Endpoint untuk Create Expense**
+
+    Method: `POST` - api/expenses
+
+    Request:
+
+    ```
+    {
+        "pocket_id": "uuid",
+        "amount": 2000000,
+        "notes": "Ganti lecet mobil orang"
+    }
+    ```
+
+7. **Endpoint untuk Get total balances**
+
+    Method: `GET` - api/pockets/total-balance
+
+8. **Create Report by Pocket ID**
+
+    Method: `POST` - api/pockets/:id/create-report
+
+    Request:
+
+    ```
+    {
+    "type": "INCOME",  // INCOME atau EXPENSE
+    "date": "2026-01-01"  // Format tanggal YYYY-MM-DD
+    }
+
+    ```
+
+9. **Stream Report (Download Excel)**
+
+    Method: `GET`- reports/:id
+
+## Testing via Postman
+
+Untung keperluan testing, tersedia collection JSON yang dapat di import ke Postman di
+
+`API Wallet GSI.postman_collection.json`
+
+---
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
