@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -22,6 +24,28 @@ class AuthController extends Controller
                 'error' => true,
                 'message' => 'Email atau password salah.',
                 ], 400);
+        }
+    }
+
+    public function profile()
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            return response()->json([
+                'status' => 200,
+                'error' => false,
+                'message' => 'Berhasil login.',
+                'data' => [
+                    'full_name' => $user->full_name,
+                    'email' => $user->email,
+                ]
+            ]);
+        } catch (JWTException $e) {
+            return response()->json([
+                'status' => 500,
+                'error' => true,
+                'message' => 'Token tidak valid.',
+            ], 500);
         }
     }
 }
