@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Income;
 use App\Models\UserPocket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IncomeController extends Controller
 {
@@ -18,31 +19,29 @@ class IncomeController extends Controller
             'notes' => 'string',
         ]);
 
-        return \DB::transaction(function () use ($request, $user) {
+        return DB::transaction(function () use ($request, $user) {
         
-        $pocket = UserPocket::where('id', $request->pocket_id)
-            ->where('user_id', $user->id)
-            ->firstOrFail();
+            $pocket = $user->pockets()->findOrFail($request->pocket_id);
 
-        $income = Income::create([
-            'user_id'   => $user->id,
-            'pocket_id' => $pocket->id,
-            'amount'    => $request->amount,
-            'notes'     => $request->notes,
-        ]);
+            $income = $user->incomes()->create([
+                'user_id'   => $user->id,
+                'pocket_id' => $pocket->id,
+                'amount'    => $request->amount,
+                'notes'     => $request->notes,
+            ]);
 
-        $pocket->increment('balance', $request->amount);
+            $pocket->increment('balance', $request->amount);
 
-        return response()->json([
-            'status'  => 200,
-            'error'   => false,
-            'message' => 'Berhasil menambahkan income.',
-            'data'    => [
-                "id"              => $income->id,
-                "pocket_id"       => $income->pocket_id,
-                "current_balance" => $pocket->balance,
-            ]
-        ]);
-    });
+            return response()->json([
+                'status'  => 200,
+                'error'   => false,
+                'message' => 'Berhasil menambahkan income.',
+                'data'    => [
+                    "id"              => $income->id,
+                    "pocket_id"       => $income->pocket_id,
+                    "current_balance" => $pocket->balance,
+                ]
+            ], 200);
+        });
     }
 }
