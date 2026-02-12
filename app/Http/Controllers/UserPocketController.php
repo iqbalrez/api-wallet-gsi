@@ -51,4 +51,15 @@ class UserPocketController extends Controller
             })
         ]);
     }
+
+    public function totalBalances(){
+        $totalBalance = auth()->user()->pockets()->sum('balance');
+
+        return response()->json([
+            'status'  => 200,
+            'error'   => false,
+            'message' => 'Berhasil mendapatkan total balance.',
+            'data'    => ['total' => $totalBalance]
+        ], 200);
+    }
 }
